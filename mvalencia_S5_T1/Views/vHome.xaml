@@ -48,14 +48,18 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        
+
                         <Label Text="{Binding Id}"/>
-                        <Label Grid.Column="1" Text="{Binding Nombre}"/>
+                        <Label Grid.Column="1" Text="{Binding Name}"/>
+                        <Button x:Name="btnEditar" Grid.Column="2" Text="Editar" Clicked="btnEditar_Clicked"/>
+                        <Button x:Name="btnEliminar" Grid.Column="3" Text="Eliminar" Clicked="btnEliminar_Clicked"/>
                     </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-        
+
     </VerticalStackLayout>
 </ContentPage>

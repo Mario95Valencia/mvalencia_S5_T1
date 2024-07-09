@@ -60,5 +60,53 @@ namespace mvalencia_S5_T1.Utils
             }
             return new List<Persona>();
         }
+
+        public bool DeletePerson(int id)
+        {
+            int result = 0;
+            try
+            {
+                Init();
+                result = con.Delete<Persona>(id);
+                StatusMessage = string.Format("{0} record(s) deleted (ID: {1})", result, id);
+                return result > 0;
+            }
+            catch (Exception ex)
+            {
+                StatusMessage = string.Format("Failed to delete {0}. Error: {1}", result, ex.Message);
+                return false;
+            }
+        }
+
+        public bool UpdatePerson(int id, string newName)
+        {
+            int result = 0;
+            try
+            {
+                Init();
+
+                if (string.IsNullOrEmpty(newName))
+                    throw new Exception("Nombre requerido");
+
+                var person = con.Table<Persona>().FirstOrDefault(p => p.Id == id);
+                if (person != null)
+                {
+                    person.Name = newName;
+                    result = con.Update(person);
+                    StatusMessage = string.Format("{0} record(s) updated (ID: {1}, Nombre: {2})", result, id, newName);
+                    return result > 0;
+                }
+                else
+                {
+                    StatusMessage = string.Format("Person with ID {0} not found.", id);
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                StatusMessage = string.Format("Failed to update {0}. Error: {1}", result, ex.Message);
+                return false;
+            }
+        }
     }
 }
